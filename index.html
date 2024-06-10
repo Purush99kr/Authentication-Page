@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication Page</title>
+    <link rel="icon" type="image/x-icon" href="my.jpg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-container sign-up-container">
+        <form id="signUpForm">
+          <h1>Create Account</h1>
+          <input name="user" id="username" type="text" placeholder="Name" required />
+          <input type="email" id="email" placeholder="Email" required />
+          <input type="password" id="password" placeholder="Password" required />
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form id="signInForm">
+          <h1>Sign In</h1>
+          <input name="useremail" id="email" type="email" placeholder="Username or email" required />
+          <input name="Pass" id="passkey" type="password" placeholder="Password" required />
+          <button type="submit">Sign In</button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>
+              To keep connected with us please login with your personal info
+            </p>
+            <button class="ghost" id="signIn">Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Hello, Friend!</h1>
+            <p>Enter your personal details and start journey with us</p>
+            <button class="ghost" id="signUp">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Firebase package manager-->
+    <script src="scripts.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+
+    <!-- Firebase integration -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+      import { getAuth, createUserWithEmailAndPassword,} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+      //import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBxlpgy_CauJssyTkmjfhgWJ5hthO9ON_o",
+        authDomain: "jsproj-a4022.firebaseapp.com",
+        projectId: "jsproj-a4022",
+        storageBucket: "jsproj-a4022.appspot.com",
+        messagingSenderId: "363693966216",
+        appId: "1:363693966216:web:46d268d3fec907c3c1f03d",
+        measurementId: "G-FP3HWM12WQ",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth();
+      //const database = getDatabase(app);
+
+      SignUp.addEventListerner("click", (e) => {
+        var username= document.getElementById("username").value;
+        var email= document.getElementById("email").value;
+        var password= document.getElementById("password").value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed up
+            const user = userCredential.user;
+            alert("User created.");
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            alert("Oops! Something went wrong.");
+            // ..
+          });
+      });
+    </script>
+  </body>
+</html>
